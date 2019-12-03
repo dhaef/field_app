@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <title>Field App</title>
+</head>
+<body>
+    <div id="container">
+        <button id="recenter" class="btn">Center Map</button>
+        <h1>SPORTS FIELD MAP</h1>
+        <h3>Click the map to add your local field!</h3>
+        <form>
+            <label>Field Name: </label><br>
+            <input type="text" id="fieldName"><br>
+            <label>Sport: </label><br>
+            <select id="sport">
+                <option value="Soccer">Soccer</option>
+                <option value="Football">Football</option>
+                <option value="Basball">Baseball</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Hockey">Hockey</option>
+                <option value="Frisbee">Frisbee</option>
+            </select><br>
+            <label>Latitude: </label><br>
+            <input type="number" id="lat"><br>
+            <label>Longitude: </label><br>
+            <input type="number" id="lon"><br>
+            <button id="submit" class="btn">Submit</button>
+            <button id="cancel" class="btn">Cancel</button>
+        </form>
+    </div>
+    <div id="map"></div>
+    <script src="app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8_1G_qrruBN7bRGrkrwGGex6G4SEnhes&callback=initMap" async defer></script>
+</body>
+</html>

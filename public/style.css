@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#map{
+    height: 750px;
+    width: 100%;
+}
+
+#container {
+    /* text-align: center; */
+    margin: 10px;
+}
+
+h1,h3 {
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+form {
+    display: none;
+    text-align: center;
+}
+
+.btn {
+    width: auto;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+    display: inline;
+}
+
+.btn:hover {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+input, select {
+    outline: none;
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+label {
+    text-align: left;
+}
