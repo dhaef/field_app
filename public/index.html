@@ -9,10 +9,8 @@
 </head>
 <body>
     <div id="container">
-        <button id="recenter" class="btn">Center Map</button>
-        <h1>SPORTS FIELD MAP</h1>
-        <h3>Click the map to add your local field!</h3>
         <form>
+            <h1>Sports Field Map</h1>
             <label>Field Name: </label><br>
             <input type="text" id="fieldName"><br>
             <label>Sport: </label><br>
@@ -31,8 +29,18 @@
             <button id="submit" class="btn">Submit</button>
             <button id="cancel" class="btn">Cancel</button>
         </form>
+        <div id="map-display">
+            <div id="map"></div>
+            <div id="over-map-title">
+                <h1>Sports Field Map</h1>
+                <h3>Click your local field to add it to the map!</h3>
+            </div>
+            <div id="over-map-recenter">
+                <button id="recenter" class="btn">Center Map</button>
+            </div>
+        </div>
     </div>
-    <div id="map"></div>
+    
     <script src="app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8_1G_qrruBN7bRGrkrwGGex6G4SEnhes&callback=initMap" async defer></script>
 </body>

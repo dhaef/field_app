@@ -3,9 +3,11 @@ let map;
 //Google Maps link calls to initalize the map
 function initMap() {
     let lat, lng;
-    const height = window.innerHeight;
-    document.getElementById('container').style.minHeight = (height * .13) + 'px';
-    document.getElementById('map').style.height = (height * .87) + 'px';
+
+    // const height = window.innerHeight;
+    // document.getElementById('container').style.minHeight = (height * .13) + 'px';
+    // document.getElementById('map').style.height = (height * .87) + 'px';
+
     //Create map at the center of the U.S.
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 37.0902, lng: -95.7129 },
@@ -32,6 +34,7 @@ function initMap() {
     google.maps.event.addListener(map, 'click', (e) => {
         //Show form when user clicks the map
         document.querySelector('form').style.display = 'block';
+        document.getElementById('map-display').style.display = 'none';
         //Set input for the Lat and Long where user clicks
         const lat = document.getElementById('lat').value = e.latLng.lat();
         const lng = document.getElementById('lon').value = e.latLng.lng();
