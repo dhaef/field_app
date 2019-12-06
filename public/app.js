@@ -1,5 +1,6 @@
 //Define map to allow access to the rest of the project
 let map;
+let new_marker_lat, new_marker_lng;
 //Google Maps link calls to initalize the map
 function initMap() {
     let lat, lng;
@@ -30,14 +31,15 @@ function initMap() {
             map.setZoom(6);
         })
     }
+
     //Listener to click and add Lat/Long to form and create new marker
     google.maps.event.addListener(map, 'click', (e) => {
         //Show form when user clicks the map
         document.querySelector('form').style.display = 'block';
         document.getElementById('map-display').style.display = 'none';
         //Set input for the Lat and Long where user clicks
-        const lat = document.getElementById('lat').value = e.latLng.lat();
-        const lng = document.getElementById('lon').value = e.latLng.lng();
+        new_marker_lat = e.latLng.lat();
+        new_marker_lng = e.latLng.lng();
         // const marker = new google.maps.Marker({
         //     position: { lat:parseFloat(lat), lng:parseFloat(lng) },
         //     map: map
@@ -100,11 +102,9 @@ async function getData() {
 document.getElementById('submit').addEventListener('click', async event => {
     //Get values from form
     let fieldName = document.getElementById('fieldName').value,
-        sport = document.getElementById('sport').value,
-        lat = document.getElementById('lat').value,
-        lon = document.getElementById('lon').value;
+        sport = document.getElementById('sport').value;
     //Set values to an objest
-    const data = { fieldName, sport, lat, lon };
+    const data = { fieldName, sport, lat: new_marker_lat, lon: new_marker_lng };
     //Set options to submit to api
     const options = {
         method: 'POST',
@@ -114,7 +114,7 @@ document.getElementById('submit').addEventListener('click', async event => {
         body: JSON.stringify(data),
       };
     //Check inputs value to see if they are filled in
-    if (fieldName === '' || sport === '' || lat === '' || lon === '') {
+    if (fieldName === '' || sport === '' || new_marker_lat === '' || new_marker_lng === '') {
         alert('You must fill in all the fields');
         return;
     } else {
@@ -126,8 +126,6 @@ document.getElementById('submit').addEventListener('click', async event => {
     //Remove values from inputs
     document.getElementById('fieldName').value = '';
     document.getElementById('sport').value = '';
-    document.getElementById('lat').value = '';
-    document.getElementById('lon').value = '';
     //Hide form
     document.querySelector('form').style.display = 'none';
 
@@ -137,7 +135,5 @@ document.getElementById('submit').addEventListener('click', async event => {
 document.getElementById('cancel').addEventListener('click', () => {
     document.getElementById('fieldName').value = '';
     document.getElementById('sport').value = '';
-    document.getElementById('lat').value = '';
-    document.getElementById('lon').value = '';
     document.querySelector('form').style.display = 'none';
 })
