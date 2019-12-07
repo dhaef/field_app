@@ -5,10 +5,6 @@ let new_marker_lat, new_marker_lng;
 function initMap() {
     let lat, lng;
 
-    // const height = window.innerHeight;
-    // document.getElementById('container').style.minHeight = (height * .13) + 'px';
-    // document.getElementById('map').style.height = (height * .87) + 'px';
-
     //Create map at the center of the U.S.
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 37.0902, lng: -95.7129 },

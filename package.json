@@ -4,6 +4,7 @@
   "description": "This is the data for the field app",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon server"
   },
   "author": "Derek",

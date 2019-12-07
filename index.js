@@ -17,17 +17,16 @@ app.post('/field_api', [
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
-    console.log('Sani', req.body);
+    // console.log('Sani', req.body);
     const data = req.body;
     database.insert(data);
-    res.json(data);
+    res.status(200).json({ success: true, data });
 });
 
 app.get('/field_api', (req, res) => {
     database.find({}, (err, data) => {
         if (err) {
-            res.end();
-            return;
+            return res.status(422).json({ err });
         }
         res.json(data);
     })
