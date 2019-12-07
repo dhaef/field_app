@@ -59,8 +59,9 @@ async function getData() {
     const field_get_response = await fetch('/field_api');
     //Convert promise to json
     const field_get_data = await field_get_response.json();
+    console.log(field_get_data);
     //Loop through each marker in the database
-    field_get_data.forEach(item => {
+    field_get_data.data.forEach(item => {
         //Store lat and long in object
         const latlongs = { lat:parseFloat(item.lat), lng:parseFloat(item.lon) };
         //Defualt icon
@@ -69,13 +70,13 @@ async function getData() {
             scaledSize: new google.maps.Size(15,15)
         }
         //Add special icons for each sport
-        if (item.sport === 'Soccer') {
+        if (item.sport === 'soccer') {
             icon.url = 'icon_pics/soccer.png';
-        } else if (item.sport === 'Baseball') {
+        } else if (item.sport === 'baseball') {
             icon.url = 'icon_pics/baseball.png';
-        } else if (item.sport === 'Basketball') {
+        } else if (item.sport === 'basketball') {
             icon.url = 'icon_pics/basketball.png';
-        } else if (item.sport === 'Football') {
+        } else if (item.sport === 'football') {
             icon.url = 'icon_pics/football.png';
         }
         //Create the marker
