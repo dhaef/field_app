@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const mongooseConnect = require('./config/db');
+const mongooseConnect = require('./db');
 const { body, validationResult, sanitizeBody } = require('express-validator');
 const app = express();
 
