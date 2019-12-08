@@ -70,7 +70,7 @@ async function getData() {
         }
         //Add special icons for each sport
         if (item.sport === 'soccer') {
-            icon.url = 'icon_pics/soccer.png';
+            icon.url = 'icon_pics/soccer2.png';
         } else if (item.sport === 'baseball') {
             icon.url = 'icon_pics/baseball.png';
         } else if (item.sport === 'basketball') {
