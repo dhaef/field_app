@@ -15,6 +15,10 @@ const FieldSchema = new mongoose.Schema({
             'basketball'
         ]
     },
+    description: {
+        type: String,
+        maxlength: 50
+    },
     lat: {
         type: Number,
         required: true

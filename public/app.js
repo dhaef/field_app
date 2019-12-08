@@ -85,10 +85,18 @@ async function getData() {
             map:map,
             icon: icon
         });
+
+        let content;
+
+        if (!item.description) {
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}`;
+        } else {
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport} <br>
+            <strong>Description:</strong> ${item.description}`;
+        }
+        
         //Add info window data
-        const infowindow = new google.maps.InfoWindow({
-            content: `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}`
-        })
+        const infowindow = new google.maps.InfoWindow({ content })
         //Add info window on click
         marker.addListener('click', () => {
             infowindow.open(map, marker);
@@ -99,9 +107,10 @@ async function getData() {
 document.getElementById('submit').addEventListener('click', async event => {
     //Get values from form
     let fieldName = document.getElementById('fieldName').value,
-        sport = document.getElementById('sport').value;
+        sport = document.getElementById('sport').value,
+        description = document.getElementById('description').value;
     //Set values to an objest
-    const data = { fieldName, sport, lat: new_marker_lat, lon: new_marker_lng };
+    const data = { fieldName, sport, description, lat: new_marker_lat, lon: new_marker_lng };
     //Set options to submit to api
     const options = {
         method: 'POST',
@@ -133,4 +142,4 @@ document.getElementById('cancel').addEventListener('click', () => {
     document.getElementById('fieldName').value = '';
     document.getElementById('sport').value = '';
     document.querySelector('form').style.display = 'none';
-})
+});
