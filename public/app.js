@@ -59,7 +59,6 @@ async function getData() {
     const field_get_response = await fetch('/field_api');
     //Convert promise to json
     const field_get_data = await field_get_response.json();
-    console.log(field_get_data);
     //Loop through each marker in the database
     field_get_data.data.forEach(item => {
         //Store lat and long in object
