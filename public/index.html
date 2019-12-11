@@ -5,23 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="style.css" rel="stylesheet" type="text/css">
-    <title>Field App</title>
+    <link rel="icon" href="icon_pics/icon.png"></link>
+    <title>Find Your Field</title>
 </head>
 <body>
     <div id="container">
-        <form>
+        <form action="#" id="new-marker-form">
             <h1>Sports Field Map</h1>
+            <p class="alert">You must fill in fieldName and sport</p>
             <label>Field Name: </label><br>
-            <input type="text" id="fieldName"><br>
+            <input type="text" id="fieldName" name="fieldName"><br>
             <label>Sport: </label><br>
-            <select id="sport">
+            <select id="sport" name="sport">
                 <option value="soccer">Soccer</option>
                 <option value="football">Football</option>
                 <option value="baseball">Baseball</option>
                 <option value="basketball">Basketball</option>
             </select><br>
             <label>Description</label><br>
-            <input type="text" id="description"><br>
+            <input type="text" id="description" name="description"><br>
             <!-- <label>Latitude: </label><br>
             <input type="number" id="lat"><br>
             <label>Longitude: </label><br>

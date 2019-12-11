@@ -79,6 +79,11 @@ label {
     text-align: left;
 }
 
+.alert {
+    display: none;
+    color: red;
+}
+
 @media only screen and (max-width: 325px) {
     
 

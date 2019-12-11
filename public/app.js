@@ -1,6 +1,13 @@
 //Define map to allow access to the rest of the project
 let map;
 let new_marker_lat, new_marker_lng;
+
+// Get Elements
+const new_marker_form = document.getElementById('new-marker-form'),
+      map_display = document.getElementById('map-display'),
+      fieldName = document.getElementById('fieldName'),
+      sport = document.getElementById('sport');
+
 //Google Maps link calls to initalize the map
 function initMap() {
     let lat, lng;
@@ -31,8 +38,8 @@ function initMap() {
     //Listener to click and add Lat/Long to form and create new marker
     google.maps.event.addListener(map, 'click', (e) => {
         //Show form when user clicks the map
-        document.querySelector('form').style.display = 'block';
-        document.getElementById('map-display').style.display = 'none';
+        new_marker_form.style.display = 'block';
+        map_display.style.display = 'none';
         //Set input for the Lat and Long where user clicks
         new_marker_lat = e.latLng.lat();
         new_marker_lng = e.latLng.lng();
@@ -42,6 +49,7 @@ function initMap() {
         // })
         //console.log(e);
     })
+    
     //Call function to load markers from database
     getData();
 
@@ -53,12 +61,15 @@ function initMap() {
         map.setZoom(6);
     })
 }
+
 //Load data from database
 async function getData() {
     //Fetch promise from api
     const field_get_response = await fetch('/field_api');
+
     //Convert promise to json
     const field_get_data = await field_get_response.json();
+
     //Loop through each marker in the database
     field_get_data.data.forEach(item => {
         //Store lat and long in object
@@ -96,49 +107,59 @@ async function getData() {
         
         //Add info window data
         const infowindow = new google.maps.InfoWindow({ content })
+
         //Add info window on click
         marker.addListener('click', () => {
             infowindow.open(map, marker);
         })
+    
     })
 }
+
 //Listener to submit new field/marker
 document.getElementById('submit').addEventListener('click', async event => {
+    
     //Get values from form
     let fieldName = document.getElementById('fieldName').value,
         sport = document.getElementById('sport').value,
         description = document.getElementById('description').value;
+
     //Set values to an objest
     const data = { fieldName, sport, description, lat: new_marker_lat, lon: new_marker_lng };
+    
     //Set options to submit to api
     const options = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
-      };
+    };
+
     //Check inputs value to see if they are filled in
-    if (fieldName === '' || sport === '' || new_marker_lat === '' || new_marker_lng === '') {
-        alert('You must fill in all the fields');
+    if (fieldName === '') {
+        alert('Please fill in the fieldname')
         return;
     } else {
         const field_response = await fetch('/field_api', options);
-        const field_json = await field_response.json();
     }
-
+    
+    // Function fetches via GET and loads all markers
     getData();
-    //Remove values from inputs
-    document.getElementById('fieldName').value = '';
-    document.getElementById('sport').value = '';
-    //Hide form
-    document.querySelector('form').style.display = 'none';
 
+    //Clear values from inputs
+    fieldName.value = '';
+    sport.value = '';
+
+    //Hide form
+    new_marker_form.style.display = 'none';
+    
     event.preventDefault();
 });
+
 //Listener to cancel new field
 document.getElementById('cancel').addEventListener('click', () => {
-    document.getElementById('fieldName').value = '';
-    document.getElementById('sport').value = '';
-    document.querySelector('form').style.display = 'none';
+    fieldName.value = '';
+    sport.value = '';
+    new_marker_form.style.display = 'none';
 });
