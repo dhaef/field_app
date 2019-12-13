@@ -6,7 +6,8 @@ let new_marker_lat, new_marker_lng;
 const new_marker_form = document.getElementById('new-marker-form'),
       map_display = document.getElementById('map-display'),
       fieldName = document.getElementById('fieldName'),
-      sport = document.getElementById('sport');
+      sport = document.getElementById('sport'),
+      description = document.getElementById('description');
 
 //Google Maps link calls to initalize the map
 function initMap() {
@@ -33,6 +34,9 @@ function initMap() {
             //Zoom in on user location
             map.setZoom(6);
         })
+
+         //Call function to load markers from database
+        getData();
     }
 
     //Listener to click and add Lat/Long to form and create new marker
@@ -49,9 +53,6 @@ function initMap() {
         // })
         //console.log(e);
     })
-    
-    //Call function to load markers from database
-    getData();
 
     document.getElementById('recenter').addEventListener('click', () => {
         map.setCenter( {
@@ -104,7 +105,9 @@ async function getData() {
             content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport} <br>
             <strong>Description:</strong> ${item.description}`;
         }
-        
+
+        content = '<form action="http://localhost:3000/test" method="post"><button>test</button></form>';
+        // content += '<button>test</button>';
         //Add info window data
         const infowindow = new google.maps.InfoWindow({ content })
 
@@ -117,15 +120,16 @@ async function getData() {
 }
 
 //Listener to submit new field/marker
-document.getElementById('submit').addEventListener('click', async event => {
-    
-    //Get values from form
-    let fieldName = document.getElementById('fieldName').value,
-        sport = document.getElementById('sport').value,
-        description = document.getElementById('description').value;
+document.getElementById('submit').addEventListener('click', async e => {
 
     //Set values to an objest
-    const data = { fieldName, sport, description, lat: new_marker_lat, lon: new_marker_lng };
+    const data = { 
+        fieldName: fieldName.value, 
+        sport: sport.value, 
+        description: description.value,
+        lat: new_marker_lat, 
+        lon: new_marker_lng 
+    };
     
     //Set options to submit to api
     const options = {
@@ -137,24 +141,22 @@ document.getElementById('submit').addEventListener('click', async event => {
     };
 
     //Check inputs value to see if they are filled in
-    if (fieldName === '') {
-        alert('Please fill in the fieldname')
-        return;
-    } else {
-        const field_response = await fetch('/field_api', options);
-    }
+    if (fieldName !== '') {
+        await fetch('/field_api', options);
+    }; 
+
+    //Hide form
+    new_marker_form.style.display = 'none';
+    map_display.style.display = 'block';
     
     // Function fetches via GET and loads all markers
-    getData();
+    // getData();
 
     //Clear values from inputs
     fieldName.value = '';
     sport.value = '';
-
-    //Hide form
-    new_marker_form.style.display = 'none';
     
-    event.preventDefault();
+    e.preventDefault();
 });
 
 //Listener to cancel new field
@@ -162,4 +164,5 @@ document.getElementById('cancel').addEventListener('click', () => {
     fieldName.value = '';
     sport.value = '';
     new_marker_form.style.display = 'none';
+    map_display.style.display = 'block';
 });
