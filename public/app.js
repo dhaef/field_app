@@ -41,17 +41,14 @@ function initMap() {
 
     //Listener to click and add Lat/Long to form and create new marker
     google.maps.event.addListener(map, 'click', (e) => {
+        
         //Show form when user clicks the map
         new_marker_form.style.display = 'block';
         map_display.style.display = 'none';
+
         //Set input for the Lat and Long where user clicks
         new_marker_lat = e.latLng.lat();
         new_marker_lng = e.latLng.lng();
-        // const marker = new google.maps.Marker({
-        //     position: { lat:parseFloat(lat), lng:parseFloat(lng) },
-        //     map: map
-        // })
-        //console.log(e);
     })
 
     document.getElementById('recenter').addEventListener('click', () => {
@@ -106,9 +103,6 @@ async function getData() {
             <strong>Description:</strong> ${item.description}`;
         }
 
-        content = '<form action="http://localhost:3000/test" method="post"><button>test</button></form>';
-        // content += '<button>test</button>';
-        //Add info window data
         const infowindow = new google.maps.InfoWindow({ content })
 
         //Add info window on click
