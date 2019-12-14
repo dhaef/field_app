@@ -41,7 +41,7 @@ function initMap() {
 
     //Listener to click and add Lat/Long to form and create new marker
     google.maps.event.addListener(map, 'click', (e) => {
-        
+
         //Show form when user clicks the map
         new_marker_form.style.display = 'block';
         map_display.style.display = 'none';
@@ -136,7 +136,11 @@ document.getElementById('submit').addEventListener('click', async e => {
 
     //Check inputs value to see if they are filled in
     if (fieldName !== '') {
-        await fetch('/field_api', options);
+        try {
+            await fetch('field_api/', options);
+        } catch (error) {
+            console.log('error');
+        }
     }; 
 
     //Hide form
@@ -144,7 +148,7 @@ document.getElementById('submit').addEventListener('click', async e => {
     map_display.style.display = 'block';
     
     // Function fetches via GET and loads all markers
-    // getData();
+    getData();
 
     //Clear values from inputs
     fieldName.value = '';
