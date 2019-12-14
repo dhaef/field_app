@@ -19,7 +19,7 @@ app.use(xss());
 
 const Field = require('./models/Field');
 
-app.post('/field_api/', async (req, res, next) => {
+app.post('/field_api', async (req, res, next) => {
     try {
         const field = await Field.create(req.body);
     

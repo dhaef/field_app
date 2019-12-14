@@ -137,7 +137,11 @@ document.getElementById('submit').addEventListener('click', async e => {
     //Check inputs value to see if they are filled in
     if (fieldName !== '') {
         try {
-            await fetch('/field_api/', options);
+            // await fetch('/field_api/', options);
+            const ajax = new XMLHttpRequest();
+            ajax.open('POST', '/field_api');
+            ajax.setRequestHeader('Content-Type', 'application/json');
+            ajax.send(JSON.stringify(data));
         } catch (error) {
             console.log('error');
         }
