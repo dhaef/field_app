@@ -13,7 +13,8 @@ function initMap() {
     //Create map at the center of the U.S.
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 37.0902, lng: -95.7129 },
-        zoom: 4
+        zoom: 4,
+        gestureHandling: 'greedy'
     });
     //Check if the browser has geolocation
     if (navigator.geolocation) {
@@ -273,7 +274,7 @@ const handleClose = function() {
     popup.setMap(null);
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName"><br><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><input type="text" id="description" name="description"><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName"><br><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description"><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
     map_display.appendChild(newDiv);
     document.getElementById('close').addEventListener('click', () => {
         handleClose()
