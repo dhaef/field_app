@@ -38,34 +38,28 @@ function initMap() {
         
     }
 
+    // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
+        // Grab hidden form div from HTML
         const content = document.getElementById('content');
+        // Display the form to add ontop of the map
         content.style.display = 'block';
+        // If the users device is less than 600px than center form on map
         if (window.innerWidth < 600) {
-            map.setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+            map.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
         }
+        // Create custom popup
         Popup = createPopupClass();
         popup = new Popup(
             new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()),
             content);
         popup.setMap(map);
-
+        // Set lat and lng variable to be sent to backend
         new_marker_lat = e.latLng.lat();
         new_marker_lng = e.latLng.lng();
     })
 
-    // //Listener to click and add Lat/Long to form and create new marker
-    // google.maps.event.addListener(map, 'click', (e) => {
-
-    //     //Show form when user clicks the map
-    //     new_marker_form.style.display = 'block';
-    //     map_display.style.display = 'none';
-
-    //     //Set input for the Lat and Long where user clicks
-    //     new_marker_lat = e.latLng.lat();
-    //     new_marker_lng = e.latLng.lng();
-    // })
-
+    // Add recenter button on desktop and tablet
     document.getElementById('recenter').addEventListener('click', () => {
         map.setCenter( {
             lat: lat,
@@ -128,52 +122,72 @@ async function getData() {
     })
 }
 
-//Listener to submit new field/marker
-// document.getElementById('submit').addEventListener('click', async e => {
+// custom form popup
 
-//     //Set values to an objest
-//     const data = { 
-//         fieldName: fieldName.value, 
-//         sport: sport.value, 
-//         description: description.value,
-//         lat: new_marker_lat, 
-//         lon: new_marker_lng 
-//     };
+// get form submit button
+document.getElementById('enter').addEventListener('click', () => {
+    // call handle submit
+    handleSubmit();
+})
 
-//     //Check inputs value to see if they are filled in
-//     if (fieldName !== '') {
-//         try {
-//             // await fetch('/field_api/', options);
-//             const ajax = new XMLHttpRequest();
-//             ajax.open('POST', '/field_api');
-//             ajax.setRequestHeader('Content-Type', 'application/json');
-//             ajax.send(JSON.stringify(data));
-//         } catch (error) {
-//             console.log('error');
-//         }
-//     }; 
+// get cancel form button
+document.getElementById('close').addEventListener('click', () => {
+    // call handle the cancel action
+    handleClose();
+});
 
-//     //Hide form
-//     new_marker_form.style.display = 'none';
-//     map_display.style.display = 'block';
+// Handle submit button
+const handleSubmit = function() {
+    const fieldName = document.getElementById('fieldName').value;
+    // create object to be sent to backend
+    const newMarkerData = {
+        fieldName,
+        sport: document.getElementById('sport').value,
+        description: document.getElementById('description').value,
+        lat: new_marker_lat,
+        lon: new_marker_lng
+    }
+
+    // Check the user has added a name for the field
+    if (fieldName !== '') {
+        try {
+            // If yes, send data to backend
+            const ajax = new XMLHttpRequest();
+            ajax.open('POST', '/field_api');
+            ajax.setRequestHeader('Content-Type', 'application/json');
+            ajax.send(JSON.stringify(newMarkerData));
+
+            // Close custom popup
+            handleClose();
+            // Add the new point to the map
+            getData();
+        } catch (error) {
+            console.log('error');
+        }
+    } else {
+        // If no, display alert
+        document.querySelector('.alert').style.display = 'block';
+    }; 
     
-//     // Function fetches via GET and loads all markers
-//     getData();
+}
 
-//     //Clear values from inputs
-//     fieldName.value = '';
-//     sport.value = '';
-    
-//     e.preventDefault();
-// });
-
-//Listener to cancel new field
-// document.getElementById('cancel').addEventListener('click', () => {
-//     fieldName.value = '';
-//     sport.value = '';
-//     new_marker_form.style.display = 'none';
-//     map_display.style.display = 'block';
-// });
+// Handle close function
+const handleClose = function() {
+    // remove the popup from the map by setting it to null
+    popup.setMap(null);
+    // recreate the new marker form
+    let newDiv = document.createElement('div');
+    newDiv.id = 'content';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName"><br><p class="alert">Fieldname is required!</p><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description"><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    map_display.appendChild(newDiv);
+    // Add events to new form
+    document.getElementById('close').addEventListener('click', () => {
+        handleClose()
+    })
+    document.getElementById('enter').addEventListener('click', () => {
+        handleSubmit();
+    })
+}
 
 function createPopupClass() {
     /**
@@ -237,49 +251,3 @@ function createPopupClass() {
   
     return Popup;
   }
-
-  document.getElementById('enter').addEventListener('click', () => {
-      handleSubmit();
-  })
-
-  document.getElementById('close').addEventListener('click', () => {
-    handleClose();
-});
-
-const handleSubmit = function() {
-    const newMarkerData = {
-        fieldName: document.getElementById('fieldName').value,
-        sport: document.getElementById('sport').value,
-        description: document.getElementById('description').value,
-        lat: new_marker_lat,
-        lon: new_marker_lng
-    }
-
-    if (fieldName !== '') {
-        try {
-            const ajax = new XMLHttpRequest();
-            ajax.open('POST', '/field_api');
-            ajax.setRequestHeader('Content-Type', 'application/json');
-            ajax.send(JSON.stringify(newMarkerData));
-        } catch (error) {
-            console.log('error');
-        }
-    }; 
-
-    handleClose();
-    getData();
-}
-
-const handleClose = function() {
-    popup.setMap(null);
-    let newDiv = document.createElement('div');
-    newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName"><br><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description"><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
-    map_display.appendChild(newDiv);
-    document.getElementById('close').addEventListener('click', () => {
-        handleClose()
-    })
-    document.getElementById('enter').addEventListener('click', () => {
-        handleSubmit();
-    })
-}
