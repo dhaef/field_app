@@ -10,23 +10,6 @@
 </head>
 <body>
     <div id="container">
-        <!-- <form action="#" id="new-marker-form">
-            <h1>Sports Field Map</h1>
-            <p class="alert">You must fill in fieldName and sport</p>
-            <label>Field Name: </label><br>
-            <input type="text" id="fieldName" name="fieldName" placeholder="Required"><br>
-            <label>Sport: </label><br>
-            <select id="sport" name="sport">
-                <option value="soccer">Soccer</option>
-                <option value="football">Football</option>
-                <option value="baseball">Baseball</option>
-                <option value="basketball">Basketball</option>
-            </select><br>
-            <label>Description</label><br>
-            <input type="text" id="description" name="description"><br>
-            <button id="submit" class="btn">Submit</button>
-            <button id="cancel" class="btn">Cancel</button>
-        </form> -->
         <div id="map-display">
             <div id="map"></div>
             <div id="over-map-title">
@@ -39,6 +22,7 @@
             <div id="content">
                 <label>Field Name</label><br>
                 <input type="text" name="fieldName" id="fieldName"><br>
+                <p class="alert">Fieldname is required!</p>
                 <label>Sport</label><br>
                 <select id="sport" name="sport">
                     <option value="soccer">Soccer</option>
@@ -47,7 +31,7 @@
                     <option value="basketball">Basketball</option>
                 </select><br>
                 <label>Description</label><br>
-                <input type="text" id="testdescription" name="description"><br>
+                <input type="text" id="description" name="description"><br>
                 <button id="enter" class="btn">Enter</button>
                 <button id="close" class="btn">Close</button>
             </div>
