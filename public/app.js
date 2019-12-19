@@ -1,15 +1,19 @@
 //Define map to allow access to the rest of the project
 let map, popup, Popup;
-let new_marker_lat, new_marker_lng, viewmode = 'on';
+let new_marker_lat, 
+    new_marker_lng, 
+    viewmode = 'on';
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
       map_display = document.getElementById('map-display')
       viewmode_btn = document.getElementById('viewmode')
-      directions = document.getElementById('directions');
+      directions = document.getElementById('directions')
+      container = document.getElementById('container');
 
+container.style.height = window.innerHeight;
 viewmode_btn.textContent = `Viewmode ${viewmode}`;
-// directions.textContent = 'Turn viewmode off to add your field';
+
 
 //Google Maps link calls to initalize the map
 function initMap() {

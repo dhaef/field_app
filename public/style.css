@@ -27,14 +27,14 @@
 #over-map-viewmode {
     display: block;
     position: absolute;
-    bottom: 5%;
+    bottom: 1%;
     left: 1%;
     z-index: 99;
 }
 
 #container {
     position: relative;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 h1,h3 {
