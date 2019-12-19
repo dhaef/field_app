@@ -27,7 +27,7 @@
 #over-map-viewmode {
     display: block;
     position: absolute;
-    bottom: 1%;
+    bottom: 5%;
     left: 1%;
     z-index: 99;
 }
@@ -179,13 +179,13 @@ label {
         z-index: 99;
     }
 
-    #over-map-viewmode {
+    /* #over-map-viewmode {
         display: block;
         position: absolute;
         bottom: 1%;
         left: 1%;
         z-index: 99;
-    }
+    } */
     
 }
 
