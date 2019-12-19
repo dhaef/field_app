@@ -14,14 +14,17 @@
             <div id="map"></div>
             <div id="over-map-title">
                 <h1>Sports Field Map</h1>
-                <h3>Click your local field to add it to the map!</h3>
+                <h3 id="directions">Turn viewmode off to add a field</h3>
             </div>
             <div id="over-map-recenter">
                 <button id="recenter" class="btn">Center Map</button>
             </div>
+            <div id="over-map-viewmode">
+                <button id="viewmode" class="btn"></button>
+            </div>
             <div id="content">
                 <label>Field Name</label><br>
-                <input type="text" name="fieldName" id="fieldName"><br>
+                <input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br>
                 <p class="alert">Fieldname is required!</p>
                 <label>Sport</label><br>
                 <select id="sport" name="sport">
@@ -31,7 +34,7 @@
                     <option value="basketball">Basketball</option>
                 </select><br>
                 <label>Description</label><br>
-                <input type="text" id="description" name="description"><br>
+                <input type="text" id="description" name="description" placeholder="Add a description..."><br>
                 <button id="enter" class="btn">Enter</button>
                 <button id="close" class="btn">Close</button>
             </div>

@@ -24,6 +24,14 @@
     display: none;
 }
 
+#over-map-viewmode {
+    display: block;
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+    z-index: 99;
+}
+
 #container {
     position: relative;
     height: 100vh;
@@ -54,7 +62,7 @@ form {
     font-size: 16px;
 }
 
-.btn:hover {
+.btn:active {
     color: black;
     background-color: white;
     border: 1px solid black;
@@ -84,7 +92,7 @@ label {
 .alert {
     display: none;
     color: red;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 #content {
@@ -166,10 +174,19 @@ label {
     #over-map-recenter {
         display: block;
         position: absolute;
+        bottom: 6%;
+        left: 1%;
+        z-index: 99;
+    }
+
+    #over-map-viewmode {
+        display: block;
+        position: absolute;
         bottom: 1%;
         left: 1%;
         z-index: 99;
     }
+    
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

@@ -1,10 +1,15 @@
 //Define map to allow access to the rest of the project
 let map, popup, Popup;
-let new_marker_lat, new_marker_lng;
+let new_marker_lat, new_marker_lng, viewmode = 'on';
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
-      map_display = document.getElementById('map-display');
+      map_display = document.getElementById('map-display')
+      viewmode_btn = document.getElementById('viewmode')
+      directions = document.getElementById('directions');
+
+viewmode_btn.textContent = `Viewmode ${viewmode}`;
+// directions.textContent = 'Turn viewmode off to add your field';
 
 //Google Maps link calls to initalize the map
 function initMap() {
@@ -38,25 +43,39 @@ function initMap() {
         
     }
 
+
     // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
-        // Grab hidden form div from HTML
-        const content = document.getElementById('content');
-        // Display the form to add ontop of the map
-        content.style.display = 'block';
-        // If the users device is less than 600px than center form on map
-        if (window.innerWidth < 600) {
-            map.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+        if (viewmode === 'off') {
+            // Grab hidden form div from HTML
+            const content = document.getElementById('content');
+            // Display the form to add ontop of the map
+            content.style.display = 'block';
+            // If the users device is less than 600px than center form on map
+            if (window.innerWidth < 600) {
+                map.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+            }
+            // Create custom popup
+            Popup = createPopupClass();
+            popup = new Popup(
+                new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()),
+                content);
+            popup.setMap(map);
+            // Set lat and lng variable to be sent to backend
+            new_marker_lat = e.latLng.lat();
+            new_marker_lng = e.latLng.lng();
         }
-        // Create custom popup
-        Popup = createPopupClass();
-        popup = new Popup(
-            new google.maps.LatLng(e.latLng.lat(), e.latLng.lng()),
-            content);
-        popup.setMap(map);
-        // Set lat and lng variable to be sent to backend
-        new_marker_lat = e.latLng.lat();
-        new_marker_lng = e.latLng.lng();
+    })
+
+    viewmode_btn.addEventListener('click', () => {
+        if (viewmode === 'on') {
+            viewmode = 'off';
+            directions.textContent = 'Click your local field to add it to the map';
+        } else {
+            viewmode = 'on';
+            directions.textContent = 'Turn viewmode off to add a field';
+        }
+        viewmode_btn.textContent =  `Viewmode ${viewmode}`;
     })
 
     // Add recenter button on desktop and tablet
@@ -178,7 +197,7 @@ const handleClose = function() {
     // recreate the new marker form
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName"><br><p class="alert">Fieldname is required!</p><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description"><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
     map_display.appendChild(newDiv);
     // Add events to new form
     document.getElementById('close').addEventListener('click', () => {
