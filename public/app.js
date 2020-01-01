@@ -2,7 +2,7 @@
 let map, popup, Popup;
 let new_marker_lat, 
     new_marker_lng, 
-    viewmode = 'on';
+    viewmode = 'enable';
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
@@ -12,8 +12,7 @@ const new_marker_form = document.getElementById('new-marker-form'),
       container = document.getElementById('container');
 
 container.style.height = window.innerHeight;
-viewmode_btn.textContent = `Viewmode ${viewmode}`;
-
+viewmode_btn.textContent = `Click to ${viewmode} adding a field`;
 
 //Google Maps link calls to initalize the map
 function initMap() {
@@ -50,7 +49,7 @@ function initMap() {
 
     // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
-        if (viewmode === 'off') {
+        if (viewmode === 'disable') {
             // Grab hidden form div from HTML
             const content = document.getElementById('content');
             // Display the form to add ontop of the map
@@ -72,14 +71,16 @@ function initMap() {
     })
 
     viewmode_btn.addEventListener('click', () => {
-        if (viewmode === 'on') {
-            viewmode = 'off';
-            directions.textContent = 'Click your local field to add it to the map';
+        if (viewmode === 'enable') {
+            viewmode = 'disable';
+            // directions.textContent = `Click to ${viewmode} adding a field`;
+            viewmode_btn.textContent =  `Click to ${viewmode} adding a field`;
         } else {
-            viewmode = 'on';
-            directions.textContent = 'Turn viewmode off to add a field';
+            viewmode = 'enable';
+            // directions.textContent = `Click to ${viewmode} adding a field`;
+            viewmode_btn.textContent =  `Click to ${viewmode} adding a field`;
         }
-        viewmode_btn.textContent =  `Viewmode ${viewmode}`;
+        // viewmode_btn.textContent =  `Viewmode ${viewmode}`;
     })
 
     // Add recenter button on desktop and tablet

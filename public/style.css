@@ -17,7 +17,7 @@
     z-index: 99;
     background-color: #ffffff;
     width: 100%;
-    height: 10%;
+    height: 6%;
 }
 
 #over-map-recenter {
@@ -27,10 +27,25 @@
 #over-map-viewmode {
     display: block;
     position: absolute;
+    top: 6%;
+    z-index: 99;
+    width: 100%;
+}
+
+#viewmode {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    font-size: 16px;
+}
+
+/* #over-map-viewmode {
+    display: block;
+    position: absolute;
     bottom: 1%;
     left: 1%;
     z-index: 99;
-}
+} */
 
 #container {
     position: relative;
@@ -98,6 +113,10 @@ label {
 #content {
     display: none;
     text-align: center;
+}
+
+#directions {
+    display: none;
 }
 
 /* The popup bubble styling. */
@@ -179,19 +198,27 @@ label {
         z-index: 99;
     }
 
-    /* #over-map-viewmode {
+    #viewmode {
+        width: auto;
+        border-radius: 4px;
+        border: 1px solid white;
+    }
+    
+    #over-map-viewmode {
         display: block;
         position: absolute;
         bottom: 1%;
         left: 1%;
         z-index: 99;
-    } */
+    }
     
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-
+    #directions {
+        display: block;
+    }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
