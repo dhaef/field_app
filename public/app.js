@@ -12,7 +12,8 @@ const new_marker_form = document.getElementById('new-marker-form'),
       container = document.getElementById('container');
 
 container.style.height = window.innerHeight;
-viewmode_btn.textContent = `Click to ${viewmode} adding a field`;
+viewmode_btn.textContent = `Click here to ${viewmode} adding a field`;
+directions.textContent = `Click here to ${viewmode} adding a field`;
 
 //Google Maps link calls to initalize the map
 function initMap() {
@@ -71,17 +72,24 @@ function initMap() {
     })
 
     viewmode_btn.addEventListener('click', () => {
+        toggle_viewmode();
+    });
+
+    directions.addEventListener('click', () => {
+        toggle_viewmode();
+    });
+
+    const toggle_viewmode = () => {
         if (viewmode === 'enable') {
             viewmode = 'disable';
-            // directions.textContent = `Click to ${viewmode} adding a field`;
-            viewmode_btn.textContent =  `Click to ${viewmode} adding a field`;
+            directions.textContent = `Click here to ${viewmode} adding a field`
+            viewmode_btn.textContent =  `Click here to ${viewmode} adding a field`
         } else {
             viewmode = 'enable';
-            // directions.textContent = `Click to ${viewmode} adding a field`;
-            viewmode_btn.textContent =  `Click to ${viewmode} adding a field`;
+            directions.textContent = `Click here to ${viewmode} adding a field`
+            viewmode_btn.textContent =  `Click here to ${viewmode} adding a field`
         }
-        // viewmode_btn.textContent =  `Viewmode ${viewmode}`;
-    })
+    }
 
     // Add recenter button on desktop and tablet
     document.getElementById('recenter').addEventListener('click', () => {

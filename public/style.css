@@ -193,7 +193,7 @@ label {
     #over-map-recenter {
         display: block;
         position: absolute;
-        bottom: 6%;
+        bottom: 1%;
         left: 1%;
         z-index: 99;
     }
@@ -205,11 +205,12 @@ label {
     }
     
     #over-map-viewmode {
-        display: block;
+        display: none;
+        /* display: block;
         position: absolute;
-        bottom: 1%;
+        bottom: 6%;
         left: 1%;
-        z-index: 99;
+        z-index: 99; */
     }
     
 }
@@ -218,6 +219,7 @@ label {
 @media only screen and (min-width: 768px) {
     #directions {
         display: block;
+        cursor: pointer;
     }
 }
 
