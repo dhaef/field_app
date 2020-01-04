@@ -2,7 +2,7 @@
 let map, popup, Popup;
 let new_marker_lat, 
     new_marker_lng, 
-    viewmode = 'enable';
+    viewmode = 'disable';
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
