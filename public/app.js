@@ -2,7 +2,8 @@
 let map, popup, Popup;
 let new_marker_lat, 
     new_marker_lng, 
-    viewmode = 'disable';
+    viewmode = 'disable',
+    windows = [];
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
@@ -51,6 +52,7 @@ function initMap() {
     // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
         if (viewmode === 'disable') {
+            closeAllWindows();
             // Grab hidden form div from HTML
             const content = document.getElementById('content');
             // Display the form to add ontop of the map
@@ -146,11 +148,21 @@ async function getData() {
 
         const infowindow = new google.maps.InfoWindow({ content })
 
+        windows.push(infowindow);
+        // let activeInfoWindow = null;
         //Add info window on click
         marker.addListener('click', () => {
+            closeAllWindows(map);
+            if (popup) { handleClose(); }
             infowindow.open(map, marker);
         })
     
+    })
+}
+
+function closeAllWindows() {
+    windows.forEach(window => {
+        window.close();
     })
 }
 
