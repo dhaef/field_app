@@ -40,7 +40,7 @@ function initMap() {
             //Set map to user location
             map.setCenter(centerPosition);
             //Zoom in on user location
-            map.setZoom(6);
+            map.setZoom(10);
         })
 
          //Call function to load markers from database
@@ -118,7 +118,7 @@ async function getData() {
         //Defualt icon
         const icon = {
             url: 'icon_pics/dot.png',
-            scaledSize: new google.maps.Size(15,15)
+            scaledSize: new google.maps.Size(12,12)
         }
         //Add special icons for each sport
         if (item.sport === 'soccer') {

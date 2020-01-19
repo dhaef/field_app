@@ -18,6 +18,10 @@ app.use(mongoSanitize());
 app.use(xss());
 
 const Field = require('./models/Field');
+// const db = require('./queries');
+
+// app.post('/field_api', db.createUser);
+// app.get('/field_api', db.getUsers);
 
 app.post('/field_api', async (req, res, next) => {
     try {
