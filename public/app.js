@@ -212,15 +212,18 @@ const handleSubmit = function() {
     if (fieldName !== '') {
         try {
             // If yes, send data to backend
-            const ajax = new XMLHttpRequest();
-            ajax.open('POST', '/field_api');
-            ajax.setRequestHeader('Content-Type', 'application/json');
-            ajax.send(JSON.stringify(newMarkerData));
-
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/field_api');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(newMarkerData));
+        
             // Close custom popup
             handleClose();
             // Add the new point to the map
-            getData();
+            xhr.onloadend = function() {
+                getData();
+                console.log('maybe')
+            }
         } catch (error) {
             console.log('error');
         }
