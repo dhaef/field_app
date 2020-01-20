@@ -169,6 +169,35 @@ label {
     width: 300px;
   }
 
+.welcome {
+    display: none;
+    position: absolute;
+    z-index: 99;
+    height: auto;
+    width: 80%;
+    background-color: white;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid black;
+}
+
+.close-welcome {
+    position: absolute;
+    right: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.title-welcome {
+    text-align: center;
+    padding-top: 3px;
+}
+
+.content-welcome {
+    text-align: center;
+}
+
 @media only screen and (max-width: 325px) {
     
 

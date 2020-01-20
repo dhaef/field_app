@@ -7,14 +7,27 @@ let new_marker_lat,
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
-      map_display = document.getElementById('map-display')
-      viewmode_btn = document.getElementById('viewmode')
-      directions = document.getElementById('directions')
-      container = document.getElementById('container');
+      map_display = document.getElementById('map-display'),
+      viewmode_btn = document.getElementById('viewmode'),
+      directions = document.getElementById('directions'),
+      container = document.getElementById('container'),
+      welcome = document.querySelector('.welcome'),
+      close_welcome = document.querySelector('.close-welcome');
 
 container.style.height = window.innerHeight;
 viewmode_btn.textContent = `Click here to ${viewmode} adding a field`;
 directions.textContent = `Click here to ${viewmode} adding a field`;
+
+// display welcome message if user has never visited
+if (!JSON.parse(window.localStorage.getItem('visited'))) {
+    welcome.style.display = 'block';
+    window.localStorage.setItem('visited', JSON.stringify('true'));
+}
+
+// close welcome message
+close_welcome.addEventListener('click', () => {
+    welcome.removeAttribute('style');
+})
 
 //Google Maps link calls to initalize the map
 function initMap() {
