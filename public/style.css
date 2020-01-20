@@ -87,16 +87,49 @@ form {
     outline: none;
 }
 
-input, select {
+input {
     outline: none;
     width: 100%;
     padding: 3px 5px;
-    margin: 8px 0;
+    margin: 2px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+select {
+    outline: none;
+    /* width: auto; */
+    /* padding: 3px 5px; */
+    /* margin: 8px 0; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    float: left;
+    margin: 2px;
+}
+
+label[for="sport"] {
+    margin: 2px 12px 2px 12px;
+}
+
+label[for="type"] {
+    margin-top: 2px;
+}
+
+select[name="sport"] {
+    margin-left: 15px;
+    margin-bottom: 3px;
+}
+
+.labels {
+    text-align: right;
+    clear: both;
+    float:left;
+    margin-right: 3px;
 }
 
 label {
