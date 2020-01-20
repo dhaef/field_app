@@ -37,7 +37,9 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 37.0902, lng: -95.7129 },
         zoom: 4,
-        gestureHandling: 'greedy'
+        gestureHandling: 'greedy',
+        mapTypeControl: false,
+        streetViewControl: false
     });
     //Check if the browser has geolocation
     if (navigator.geolocation) {
@@ -70,10 +72,8 @@ function initMap() {
             const content = document.getElementById('content');
             // Display the form to add ontop of the map
             content.style.display = 'block';
-            // If the users device is less than 600px than center form on map
-            if (window.innerWidth < 600) {
-                map.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-            }
+           
+            map.panTo({ lat: (e.latLng.lat() + .05), lng: e.latLng.lng() });
             // Create custom popup
             Popup = createPopupClass();
             popup = new Popup(
@@ -156,9 +156,9 @@ async function getData() {
         let content;
 
         if (!item.description) {
-            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}`;
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}, <strong>Field type:</strong> ${item.fieldType}`;
         } else {
-            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport} <br>
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}, <strong>Field type:</strong> ${item.fieldType} <br>
             <strong>Description:</strong> ${item.description}`;
         }
 
@@ -204,6 +204,7 @@ const handleSubmit = function() {
         fieldName,
         sport: document.getElementById('sport').value,
         description: document.getElementById('description').value,
+        fieldType: document.getElementById('type').value,
         lat: new_marker_lat,
         lon: new_marker_lng
     }
@@ -222,7 +223,9 @@ const handleSubmit = function() {
             // Add the new point to the map
             xhr.onloadend = function() {
                 getData();
-                console.log('maybe')
+            }
+            xhr.onerror = function() {
+                console.log('Network Error');
             }
         } catch (error) {
             console.log('error');
@@ -241,7 +244,7 @@ const handleClose = function() {
     // recreate the new marker form
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label>Sport</label><br><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label>Field Type</label><select id="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
     map_display.appendChild(newDiv);
     // Add events to new form
     document.getElementById('close').addEventListener('click', () => {

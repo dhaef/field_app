@@ -19,6 +19,14 @@ const FieldSchema = new mongoose.Schema({
         type: String,
         maxlength: 50
     },
+    fieldType: {
+        type: String,
+        required: true,
+        enum: [
+            'public',
+            'private'
+        ]
+    },
     lat: {
         type: Number,
         required: true
