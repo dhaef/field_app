@@ -86,14 +86,17 @@ function initMap() {
         }
     })
 
+    // toggle viewmode on button click (currently disabled for click on directions)
     viewmode_btn.addEventListener('click', () => {
         toggle_viewmode();
     });
 
+    // click on the directions to disable/enable adding a map
     directions.addEventListener('click', () => {
         toggle_viewmode();
     });
 
+    // toggle enabling adding a new map
     const toggle_viewmode = () => {
         if (viewmode === 'enable') {
             viewmode = 'disable';

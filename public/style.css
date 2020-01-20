@@ -196,6 +196,7 @@ label {
 
 .content-welcome {
     text-align: center;
+    padding: 3px;
 }
 
 @media only screen and (max-width: 325px) {
@@ -254,7 +255,9 @@ label {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-    
+    .welcome {
+        width: 40%;
+    }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
