@@ -63,7 +63,6 @@ function initMap() {
         
     }
 
-    console.log(typeof innerWidth);
     // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
         if (viewmode === 'disable') {
@@ -156,9 +155,9 @@ async function getData() {
         let content;
 
         if (!item.description) {
-            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}, <strong>Field type:</strong> ${item.fieldType}`;
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${firstLetterToUppercase(item.sport)}, <strong>Field type:</strong> ${firstLetterToUppercase(item.fieldType)}`;
         } else {
-            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${item.sport}, <strong>Field type:</strong> ${item.fieldType} <br>
+            content = `<strong>Fieldname:</strong> ${item.fieldName}, <strong>Sport:</strong> ${firstLetterToUppercase(item.sport)}, <strong>Field type:</strong> ${firstLetterToUppercase(item.fieldType)} <br>
             <strong>Description:</strong> ${item.description}`;
         }
 
@@ -174,6 +173,11 @@ async function getData() {
         })
     
     })
+}
+
+function firstLetterToUppercase(word) {
+    if (!word) { return; }
+    return word[0].toUpperCase() + word.slice(1);
 }
 
 function closeAllWindows() {
@@ -214,19 +218,18 @@ const handleSubmit = function() {
         try {
             // If yes, send data to backend
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/field_api');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(newMarkerData));
-        
-            // Close custom popup
-            handleClose();
-            // Add the new point to the map
             xhr.onloadend = function() {
                 getData();
             }
             xhr.onerror = function() {
                 console.log('Network Error');
             }
+            xhr.open('POST', '/field_api');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(newMarkerData));
+        
+            // Close custom popup
+            handleClose();
         } catch (error) {
             console.log('error');
         }

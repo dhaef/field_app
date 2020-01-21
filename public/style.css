@@ -113,15 +113,15 @@ select {
 }
 
 label[for="sport"] {
-    margin: 2px 12px 2px 12px;
+    margin: 4px 12px 2px 12px;
 }
 
 label[for="type"] {
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 select[name="sport"] {
-    margin-left: 15px;
+    margin-left: 16px;
     margin-bottom: 3px;
 }
 
