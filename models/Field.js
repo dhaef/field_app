@@ -12,7 +12,11 @@ const FieldSchema = new mongoose.Schema({
             'soccer',
             'football',
             'baseball',
-            'basketball'
+            'basketball',
+            'tennis',
+            'rugby',
+            'hockey',
+            'soccer/football'
         ]
     },
     description: {

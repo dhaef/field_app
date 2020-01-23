@@ -97,6 +97,7 @@ input {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
+    height: 30px;
 }
 
 select {
@@ -107,9 +108,11 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px;
     float: left;
     margin: 2px;
+    text-align: center;
+    height: 30px;
 }
 
 label[for="sport"] {
@@ -144,6 +147,11 @@ label {
 }
 
 #content {
+    display: none;
+    text-align: center;
+}
+
+#info-content {
     display: none;
     text-align: center;
 }

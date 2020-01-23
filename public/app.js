@@ -144,7 +144,15 @@ async function getData() {
             icon.url = 'icon_pics/basketball.png';
         } else if (item.sport === 'football') {
             icon.url = 'icon_pics/football.png';
-        }
+        } else if (item.sport === 'tennis') {
+            icon.url = 'icon_pics/tennis.png';
+        } else if (item.sport === 'rugby') {
+            icon.url = 'icon_pics/rugby.png';
+        } else if (item.sport === 'hockey') {
+            icon.url = 'icon_pics/hockey.png';
+        } else if (item.sport === 'soccer/football') {
+            icon.url = 'icon_pics/soccer&football.png';
+        } 
         //Create the marker
         let marker = new google.maps.Marker({
             position:latlongs,
@@ -167,9 +175,22 @@ async function getData() {
         // let activeInfoWindow = null;
         //Add info window on click
         marker.addListener('click', () => {
-            closeAllWindows(map);
+            closeAllWindows();
             if (popup) { handleClose(); }
             infowindow.open(map, marker);
+
+        //     // Grab hidden form div from HTML
+        //     const info_content = document.getElementById('info-content');
+        //     // Display the form to add ontop of the map
+        //     info_content.style.display = 'block';
+        //     info_content.textContent = `${item.fieldName}`;
+        //     map.panTo({ lat: item.lat, lng: item.lon });
+        //     // Create custom popup
+        //     Popup = createPopupClass();
+        //     popup = new Popup(
+        //         new google.maps.LatLng(item.lat, item.lon),
+        //         info_content);
+        //     popup.setMap(map);
         })
     
     })
@@ -218,15 +239,15 @@ const handleSubmit = function() {
         try {
             // If yes, send data to backend
             const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/field_api');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(newMarkerData));
             xhr.onloadend = function() {
                 getData();
             }
             xhr.onerror = function() {
                 console.log('Network Error');
             }
-            xhr.open('POST', '/field_api');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify(newMarkerData));
         
             // Close custom popup
             handleClose();
