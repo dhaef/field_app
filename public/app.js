@@ -151,7 +151,7 @@ async function getData() {
         } else if (item.sport === 'hockey') {
             icon.url = 'icon_pics/hockey.png';
         } else if (item.sport === 'soccer/football') {
-            icon.url = 'icon_pics/soccer&football.png';
+            icon.url = 'icon_pics/soccer_football.png';
         } 
         //Create the marker
         let marker = new google.maps.Marker({
@@ -268,7 +268,7 @@ const handleClose = function() {
     // recreate the new marker form
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">Soccer</option><option value="football">Football</option><option value="baseball">Baseball</option><option value="basketball">Basketball</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">⚽️</option><option value="football">🏈</option><option value="baseball">⚾️</option><option value="basketball">🏀</option><option value="tennis">🎾</option><option value="rugby">🏉</option><option value="hockey">🏒</option><option value="soccer/football">⚽️ & 🏈</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
     map_display.appendChild(newDiv);
     // Add events to new form
     document.getElementById('close').addEventListener('click', () => {
