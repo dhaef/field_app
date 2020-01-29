@@ -12,7 +12,8 @@ const new_marker_form = document.getElementById('new-marker-form'),
       directions = document.getElementById('directions'),
       container = document.getElementById('container'),
       welcome = document.querySelector('.welcome'),
-      close_welcome = document.querySelector('.close-welcome');
+      close_welcome = document.querySelector('.close-welcome'),
+      fieldNameAlert = document.querySelector('.alert');
 
 container.style.height = window.innerHeight;
 viewmode_btn.textContent = `Click here to ${viewmode} adding a field`;
@@ -178,19 +179,6 @@ async function getData() {
             closeAllWindows();
             if (popup) { handleClose(); }
             infowindow.open(map, marker);
-
-        //     // Grab hidden form div from HTML
-        //     const info_content = document.getElementById('info-content');
-        //     // Display the form to add ontop of the map
-        //     info_content.style.display = 'block';
-        //     info_content.textContent = `${item.fieldName}`;
-        //     map.panTo({ lat: item.lat, lng: item.lon });
-        //     // Create custom popup
-        //     Popup = createPopupClass();
-        //     popup = new Popup(
-        //         new google.maps.LatLng(item.lat, item.lon),
-        //         info_content);
-        //     popup.setMap(map);
         })
     
     })
@@ -244,19 +232,25 @@ const handleSubmit = function() {
             xhr.send(JSON.stringify(newMarkerData));
             xhr.onloadend = function() {
                 getData();
+                var jsonResponse = JSON.parse(xhr.responseText);
+                if (jsonResponse.success === false) {
+                    fieldNameAlert.textContent = jsonResponse.data;
+                    console.log(jsonResponse.data)
+                    fieldNameAlert.style.display = 'block';
+                } else {
+                    // Close custom popup
+                    handleClose();
+                }
             }
             xhr.onerror = function() {
                 console.log('Network Error');
             }
-        
-            // Close custom popup
-            handleClose();
         } catch (error) {
             console.log('error');
         }
     } else {
         // If no, display alert
-        document.querySelector('.alert').style.display = 'block';
+        fieldNameAlert.style.display = 'block';
     }; 
     
 }
