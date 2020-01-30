@@ -89,8 +89,8 @@ form {
     height: 40px;
     padding: 3px 5px;
     border-radius: 4px;
-    /* color: white;
-    background-color: white; */
+    /* color: white;*/
+    background-color: white;
     border: 1px solid lightgray;
     display: inline;
     font-size: 16px;
