@@ -381,7 +381,7 @@ exports.createField = async (req, res, next) => {
         'zoophilia',
         '🖕' ];
         xWords.forEach(word => {
-            if (req.body.fieldName.toLowerCase().includes(word)) {
+            if (req.body.fieldName.toLowerCase().includes(word) || req.body.description.toLowerCase().includes(word)) {
                 allowed = false;
             }
         })

@@ -29,17 +29,24 @@
                 <p class="content-welcome">Find new local sporting fields and add your old favorites. To add a field click on the location and fill out the form. Let’s get the ball rolling on creating a community of fields to play your favorite games!</p>
             </div>
             <div id="map"></div>
-            <div id="over-map-title">
+            <div id="over-map-search">
+                <input type="text" id="search" placeholder="Discover your field...">
+                <!-- <button id="viewmode" class="btn"></button> -->
+                <button id="viewmode" class="btn btn-40">Viewmode: off</button>
+                <button id="recenter" class="btn btn-30">Center Map</button>
+                <button id="searchBtn" class="btn btn-25">Search</button>
+            </div>
+            <!-- <div id="over-map-title">
                 <h1>Sports Field Map</h1>
-                <!-- <h3 id="directions">Turn viewmode off to add a field</h3> -->
+                <h3 id="directions">Turn viewmode off to add a field</h3>
                 <h3 id="directions"></h3>
-            </div>
-            <div id="over-map-recenter">
+            </div> -->
+            <!-- <div id="over-map-recenter">
                 <button id="recenter" class="btn">Center Map</button>
-            </div>
-            <div id="over-map-viewmode">
+            </div> -->
+            <!-- <div id="over-map-viewmode">
                 <button id="viewmode" class="btn"></button>
-            </div>
+            </div> -->
             <div id="content">
                 <label>Field Name</label><br>
                 <input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br>
@@ -62,14 +69,14 @@
                 </select><br>
                 <label>Description</label><br>
                 <input type="text" id="description" name="description" placeholder="Add a description..."><br>
-                <button id="enter" class="btn">Enter</button>
-                <button id="close" class="btn">Close</button>
+                <button id="enter" class="btn btn-popup">Enter</button>
+                <button id="close" class="btn btn-popup">Close</button>
             </div>
             <div id="info-content"></div>
         </div>
     </div>
     
     <script src="app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8_1G_qrruBN7bRGrkrwGGex6G4SEnhes&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8_1G_qrruBN7bRGrkrwGGex6G4SEnhes&libraries=places&callback=initMap" async defer></script>
 </body>
 </html>

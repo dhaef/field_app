@@ -18,6 +18,24 @@
     background-color: #ffffff;
     width: 100%;
     height: 6%;
+    overflow: hidden;
+}
+
+#over-map-search {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    margin: 10px;
+    width: 320px;
+}
+
+#search {
+    height: 40px;
+    width: 100%;
+}
+
+#searchBtn {
+    
 }
 
 #over-map-recenter {
@@ -28,16 +46,17 @@
     display: block;
     position: absolute;
     top: 6%;
-    z-index: 99;
+    z-index: 98;
     width: 100%;
+    overflow: hidden;
 }
 
-#viewmode {
+/* #viewmode {
     width: 100%;
     border-radius: 0;
     border: none;
     font-size: 16px;
-}
+} */
 
 /* #over-map-viewmode {
     display: block;
@@ -67,6 +86,40 @@ form {
 }
 
 .btn {
+    height: 40px;
+    padding: 3px 5px;
+    border-radius: 4px;
+    /* color: white;
+    background-color: white; */
+    border: 1px solid lightgray;
+    display: inline;
+    font-size: 16px;
+    margin-left: .3%;
+}
+
+.btn:active {
+    /* color: black; */
+    background-color: lightgray;
+    /* border: 1px solid black; */
+}
+
+.btn-40 {
+    width: 40%;
+}
+
+.btn-30 {
+    width: 30%;
+}
+
+.btn-25 {
+    width: 25%;
+}
+
+.btn-popup {
+    height: 30px; !important
+}
+
+/* .btn {
     width: auto;
     padding: 3px 5px;
     border-radius: 4px;
@@ -81,7 +134,7 @@ form {
     color: black;
     background-color: white;
     border: 1px solid black;
-}
+} */
 
 .btn:focus {
     outline: none;
@@ -240,8 +293,10 @@ label {
     padding: 3px;
 }
 
-@media only screen and (max-width: 325px) {
-    
+@media only screen and (max-width: 335px) {
+    #over-map-search {
+        margin: 0;
+    }
 
 }
 
@@ -253,7 +308,7 @@ label {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-    #over-map-title {
+    /* #over-map-title {
         position: absolute;
         top: 1%;
         left: 0%;
@@ -282,7 +337,7 @@ label {
         bottom: 6%;
         left: 1%;
         z-index: 99; */
-    }
+    } */
     
 }
 

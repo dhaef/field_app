@@ -2,8 +2,9 @@
 let map, popup, Popup;
 let new_marker_lat, 
     new_marker_lng, 
-    viewmode = 'disable',
-    windows = [];
+    viewmode = 'off',
+    windows = [],
+    place;
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
@@ -13,11 +14,13 @@ const new_marker_form = document.getElementById('new-marker-form'),
       container = document.getElementById('container'),
       welcome = document.querySelector('.welcome'),
       close_welcome = document.querySelector('.close-welcome'),
-      fieldNameAlert = document.querySelector('.alert');
+      fieldNameAlert = document.querySelector('.alert'),
+      search = document.getElementById('search'),
+      searchBtn = document.getElementById('searchBtn');
 
 container.style.height = window.innerHeight;
-viewmode_btn.textContent = `Click here to ${viewmode} adding a field`;
-directions.textContent = `Click here to ${viewmode} adding a field`;
+viewmode_btn.textContent = `Viewmode: ${viewmode}`;
+// directions.textContent = `Click here to ${viewmode} adding a field`;
 
 // display welcome message if user has never visited
 if (!JSON.parse(window.localStorage.getItem('visited'))) {
@@ -40,7 +43,8 @@ function initMap() {
         zoom: 4,
         gestureHandling: 'greedy',
         mapTypeControl: false,
-        streetViewControl: false
+        streetViewControl: false,
+        fullscreenControl: false
     });
     //Check if the browser has geolocation
     if (navigator.geolocation) {
@@ -62,11 +66,27 @@ function initMap() {
          //Call function to load markers from database
         getData();
         
+        var autocomplete = new google.maps.places.Autocomplete(search);
+        autocomplete.bindTo('bounds', map);
+        autocomplete.setFields(
+            ['address_components', 'geometry', 'icon', 'name']);
+        autocomplete.addListener('place_changed', function() {
+            place = autocomplete.getPlace();
+            if (!place.geometry) {
+                alert('No details for this place');
+            } else {
+                searchBtn.addEventListener('click', () => {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(12);  // Why 17? Because it looks good.
+                    search.value = '';
+                })
+            }
+        })
     }
 
     // Add click event to map for user to add a point
     google.maps.event.addListener(map, 'click', (e) => {
-        if (viewmode === 'disable') {
+        if (viewmode === 'off') {
             closeAllWindows();
             // Grab hidden form div from HTML
             const content = document.getElementById('content');
@@ -92,20 +112,20 @@ function initMap() {
     });
 
     // click on the directions to disable/enable adding a map
-    directions.addEventListener('click', () => {
-        toggle_viewmode();
-    });
+    // directions.addEventListener('click', () => {
+    //     toggle_viewmode();
+    // });
 
     // toggle enabling adding a new map
     const toggle_viewmode = () => {
-        if (viewmode === 'enable') {
-            viewmode = 'disable';
-            directions.textContent = `Click here to ${viewmode} adding a field`
-            viewmode_btn.textContent =  `Click here to ${viewmode} adding a field`
+        if (viewmode === 'on') {
+            viewmode = 'off';
+            // directions.textContent = `Click here to ${viewmode} adding a field`
+            viewmode_btn.textContent =  `Viewmode: ${viewmode}`
         } else {
-            viewmode = 'enable';
-            directions.textContent = `Click here to ${viewmode} adding a field`
-            viewmode_btn.textContent =  `Click here to ${viewmode} adding a field`
+            viewmode = 'on';
+            // directions.textContent = `Click here to ${viewmode} adding a field`
+            viewmode_btn.textContent =  `Viewmode: ${viewmode}`
         }
     }
 
@@ -115,7 +135,7 @@ function initMap() {
             lat: lat,
             lng: lng
         } );
-        map.setZoom(6);
+        map.setZoom(12);
     })
 }
 
@@ -235,7 +255,7 @@ const handleSubmit = function() {
                 var jsonResponse = JSON.parse(xhr.responseText);
                 if (jsonResponse.success === false) {
                     fieldNameAlert.textContent = jsonResponse.data;
-                    console.log(jsonResponse.data)
+                    // console.log(jsonResponse.data)
                     fieldNameAlert.style.display = 'block';
                 } else {
                     // Close custom popup
@@ -262,7 +282,7 @@ const handleClose = function() {
     // recreate the new marker form
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">⚽️</option><option value="football">🏈</option><option value="baseball">⚾️</option><option value="basketball">🏀</option><option value="tennis">🎾</option><option value="rugby">🏉</option><option value="hockey">🏒</option><option value="soccer/football">⚽️ & 🏈</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn">Enter</button><button id="close" class="btn">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">⚽️</option><option value="football">🏈</option><option value="baseball">⚾️</option><option value="basketball">🏀</option><option value="tennis">🎾</option><option value="rugby">🏉</option><option value="hockey">🏒</option><option value="soccer/football">⚽️ & 🏈</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn btn-popup">Enter</button><button id="close" class="btn btn-popup">Close</button>';
     map_display.appendChild(newDiv);
     // Add events to new form
     document.getElementById('close').addEventListener('click', () => {
@@ -272,6 +292,22 @@ const handleClose = function() {
         handleSubmit();
     })
 }
+
+// searchBtn.addEventListener('click', () => {
+//     var request = {
+//         query: search.value,
+//         fields: ['name', 'geometry'],
+//       };
+
+//       service = new google.maps.places.PlacesService(map);
+
+//       service.findPlaceFromQuery(request, function(results, status) {
+//         if (status === google.maps.places.PlacesServiceStatus.OK) {
+//             map.setCenter(results[0].geometry.location);
+//             map.setZoom(12)
+//         }
+//       });
+// })
 
 function createPopupClass() {
     /**
