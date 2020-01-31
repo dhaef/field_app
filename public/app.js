@@ -4,7 +4,9 @@ let new_marker_lat,
     new_marker_lng, 
     viewmode = 'off',
     windows = [],
-    place;
+    place,
+    fieldNameAlert = document.querySelector('.fieldNameAlert'),
+    descriptionAlert = document.querySelector('.descriptionAlert');
 
 // Get Elements
 const new_marker_form = document.getElementById('new-marker-form'),
@@ -14,7 +16,6 @@ const new_marker_form = document.getElementById('new-marker-form'),
       container = document.getElementById('container'),
       welcome = document.querySelector('.welcome'),
       close_welcome = document.querySelector('.close-welcome'),
-      fieldNameAlert = document.querySelector('.alert'),
       search = document.getElementById('search'),
       searchBtn = document.getElementById('searchBtn');
 
@@ -75,10 +76,28 @@ function initMap() {
             if (!place.geometry) {
                 alert('No details for this place');
             } else {
+                // search on button click
                 searchBtn.addEventListener('click', () => {
                     map.setCenter(place.geometry.location);
                     map.setZoom(12);  // Why 17? Because it looks good.
                     search.value = '';
+                })
+                // search on input enter
+                search.addEventListener('keyup', (e) => {
+                    e.preventDefault();
+                    if (e.keyCode === 13) {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(12);  // Why 17? Because it looks good.
+                        search.value = '';
+                    }
+                })
+                document.querySelector('body').addEventListener('keyup', (e) => {
+                    e.preventDefault();
+                    if (e.keyCode === 13) {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(12);  // Why 17? Because it looks good.
+                        search.value = '';
+                    }
                 })
             }
         })
@@ -254,9 +273,15 @@ const handleSubmit = function() {
                 getData();
                 var jsonResponse = JSON.parse(xhr.responseText);
                 if (jsonResponse.success === false) {
-                    fieldNameAlert.textContent = jsonResponse.data;
-                    // console.log(jsonResponse.data)
-                    fieldNameAlert.style.display = 'block';
+                    // console.log(jsonResponse)
+                    if (jsonResponse.data.fieldName_status === false) {
+                        fieldNameAlert.textContent = 'Fieldname contains a banned word';
+                        fieldNameAlert.style.display = 'block';
+                    }
+                    if (jsonResponse.data.description_status === false) {
+                        descriptionAlert.textContent = 'Description contains a banned word';
+                        descriptionAlert.style.display = 'block';
+                    }
                 } else {
                     // Close custom popup
                     handleClose();
@@ -282,8 +307,10 @@ const handleClose = function() {
     // recreate the new marker form
     let newDiv = document.createElement('div');
     newDiv.id = 'content';
-    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">⚽️</option><option value="football">🏈</option><option value="baseball">⚾️</option><option value="basketball">🏀</option><option value="tennis">🎾</option><option value="rugby">🏉</option><option value="hockey">🏒</option><option value="soccer/football">⚽️ & 🏈</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><button id="enter" class="btn btn-popup">Enter</button><button id="close" class="btn btn-popup">Close</button>';
+    newDiv.innerHTML = '<label>Field Name</label><br><input type="text" name="fieldName" id="fieldName" placeholder="Add a fieldname..."><br><p class="fieldNameAlert alert">Fieldname is required!</p><label class="labels" for="sport">Sport</label><select id="sport" name="sport"><option value="soccer">⚽️</option><option value="football">🏈</option><option value="baseball">⚾️</option><option value="basketball">🏀</option><option value="tennis">🎾</option><option value="rugby">🏉</option><option value="hockey">🏒</option><option value="soccer/football">⚽️ & 🏈</option></select><br><label class="labels" for="type">Field Type</label><select id="type" name="type"><option value="public">Public (free)</option><option value="private">Private (paid)</option></select><br><label>Description</label><br><input type="text" id="description" name="description" placeholder="Add a description..."><br><p class="descriptionAlert alert"></p><button id="enter" class="btn btn-popup">Enter</button><button id="close" class="btn btn-popup">Close</button>';
     map_display.appendChild(newDiv);
+    fieldNameAlert = document.querySelector('.fieldNameAlert');
+    descriptionAlert = document.querySelector('.descriptionAlert');
     // Add events to new form
     document.getElementById('close').addEventListener('click', () => {
         handleClose()

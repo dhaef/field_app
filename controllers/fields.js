@@ -2,7 +2,8 @@ const Field = require('../models/Field');
 
 exports.createField = async (req, res, next) => {
     try {
-        let allowed = true;
+        let description_status = true,
+            fieldName_status = true;
         const xWords = [ '2g1c',
         '2 girls 1 cup',
         'acrotomophilia',
@@ -381,16 +382,18 @@ exports.createField = async (req, res, next) => {
         'zoophilia',
         '🖕' ];
         xWords.forEach(word => {
-            if (req.body.fieldName.toLowerCase().includes(word) || req.body.description.toLowerCase().includes(word)) {
-                allowed = false;
+            if (req.body.fieldName.toLowerCase().includes(word)) {
+                fieldName_status = false;
+            } else if (req.body.description.toLowerCase().includes(word)){
+                description_status = false;
             }
         })
 
-        if (allowed === true) {
+        if (description_status === true && fieldName_status === true) {
             const field = await Field.create(req.body);
             res.status(200).json({ success: true, data: field });
         } else {
-            res.status(500).json({ success: false, data: 'Field Name includes a banned word' });
+            res.status(500).json({ success: false, data: { description_status, fieldName_status } });
         }
         
     } catch (error) {
